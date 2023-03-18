@@ -120,7 +120,7 @@ EOF
   # If test suite is yes then create a test suite.
   if [ $testsuite = "y" ]; then
     mkdir test
-    cat <<EOF > test/Main.hs
+    cat <<EOF > test/Spec.hs
 import Test.Tasty
 
 main :: IO ()
