@@ -2,6 +2,8 @@
 
 simple-haskell-project is a convenient script that sets up a fully decked haskell project.
 
+Check out the example projects in [example projects](https://github.com/Josemarialanda/simple-haskell-project/tree/master/example%20projects).
+
 * Fast!
 * Simple!
 * No messing around with template repositories!
