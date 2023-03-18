@@ -1,6 +1,6 @@
 # simple-haskell-project
 
-# simple-haskell-project is a convenient script that sets up a fully decked haskell project.
+simple-haskell-project is a convenient script that sets up a fully decked haskell project.
 
 * Fast!
 * Simple!
