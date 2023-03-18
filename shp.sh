@@ -121,8 +121,6 @@ EOF
   if [ $testsuite = "y" ]; then
     mkdir test
     cat <<EOF > test/Main.hs
-module Main where
-
 import Test.Tasty
 
 main :: IO ()
@@ -148,8 +146,6 @@ EOF
   if [ $benchmarksuite = "y" ]; then
     mkdir bench
     cat <<EOF > bench/Main.hs
-module Main where
-
 import Criterion.Main
 
 main :: IO ()
