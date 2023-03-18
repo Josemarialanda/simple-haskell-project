@@ -61,17 +61,16 @@ function usage {
   project=${project:-simple-haskell-project}
   project=$(echo $project | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -d '[:space:]')
   
-  # If project name contains any non-alphanumeric characters (with the exception of hyphens) then ask for a new project name until a valid project name is entered.
-  while [[ ! $project =~ ^[a-z0-9-]+$ ]]; do
-    echo "Project name must only contain alphanumeric characters and hyphens."
-    read -p "Enter the project name [simple-haskell-project]: " project
-    project=${project:-simple-haskell-project}
-    project=$(echo $project | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -d '[:space:]')
-  done
-  
-  # If project name is the same as the name of a directory in the current directory then ask for a new project name until a valid project name is entered.
-  while [ -d $project ]; do
-    echo "Project name must not be the same as the name of a directory in the current directory."
+# If project name contains any non-alphanumeric characters (with the exception of hyphens)
+# or if project name is the same as the name of a directory in the current directory then
+# ask for a new project name until a valid project name is entered.
+  while [[ ! $project =~ ^[a-z0-9-]+$ ]] || [ -d $project ]; do
+    if [[ ! $project =~ ^[a-z0-9-]+$ ]]; then
+      echo "Project name must only contain alphanumeric characters and hyphens."
+    fi
+    if [ -d $project ]; then
+      echo "Project name must not be the same as the name of a directory in the current directory."
+    fi
     read -p "Enter the project name [simple-haskell-project]: " project
     project=${project:-simple-haskell-project}
     project=$(echo $project | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -d '[:space:]')
