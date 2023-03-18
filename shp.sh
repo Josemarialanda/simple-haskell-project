@@ -357,9 +357,18 @@ cradle:
   multi:
     # - path: "ignore/"
     #   config: {cradle: {none: }}
-    - path: "src"
+    - path: "$srcdir"
       config: {cradle: {cabal: {component: "$project:$project-exe"}}}
 EOF
+
+  # if either test suite or benchmark suite is yes then add the following to the hie.yaml file generated above.
+  if [ $testsuite = "y" ] || [ $testsuite = "Y" ] || [ $benchmarksuite = "y" ] || [ $benchmarksuite = "Y" ]; then
+    cat <<EOF >> hie.yaml
+    
+    - path: "lib"
+      config: {cradle: {cabal: {component: "lib:$project"}}}
+EOF
+  fi
   
   # If test suite is yes then add the test suite to the hie.yaml file generated above.
   if [ $testsuite = "y" ] || [ $testsuite = "Y" ]; then
