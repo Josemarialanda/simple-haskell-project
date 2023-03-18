@@ -1,6 +1,6 @@
 # simple-haskell-project
 
-This is a rad script that sets up a simple haskell project!
+This is a rad script that sets up a haskell project.
 
 * Fast!
 * Simple!
