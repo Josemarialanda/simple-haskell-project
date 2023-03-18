@@ -1,6 +1,12 @@
 # simple-haskell-project
 
-simple-haskell-project is a convenient script that sets up a haskell project containing **ghc**, **cabal**, **hoogle**, **ormolu**, and **haskell-language-server**.
+simple-haskell-project is a convenient script that sets up a haskell project containing:
+
+* **ghc**
+* **cabal**
+* **hoogle**
+* **ormolu**
+* **haskell-language-server**.
 
 Check out the example projects in [example projects](https://github.com/Josemarialanda/simple-haskell-project/tree/master/example%20projects).
 
@@ -69,7 +75,7 @@ This will create a nix flake + cabal based project in the folder my-simple-haske
 
 You can enter the Nix shell with `nix develop`. From within the shell you can use cabal to enter the repl with `cabal repl` and you can build your project with `cabal build`.
 
-You can also build your project entirely with nix using `nix build`.
+You can also build your project with nix instead using `nix build`.
 
 **Note**: While the script itself does not depend on cabal or nix to run, in order to build/enter the development shell of your newly created project you do need to have nix + flakes installed.
 
