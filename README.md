@@ -3,7 +3,7 @@
 This is a rad script that sets up a simple haskell project!
 
 * Fast!
-* Simple to use!
+* Simple!
 * No messing around with template repositories!
 * Generated code is easy to read and extend!
 
