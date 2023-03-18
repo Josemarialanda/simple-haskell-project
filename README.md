@@ -70,3 +70,34 @@ You can enter the Nix shell with nix develop. Running cabal from inside this she
 
 **Note**: While the script itself does not depend on cabal or nix to run, in order to build/enter the development shell of your newly created project you do need to
 have nix + flakes installed.
+
+## Install Nix
+
+[NixOS - Getting Nix / NixOS](https://nixos.org/download.html#nix-install-linux)
+
+## Enable flakes
+
+### NixOS
+
+On NixOS set the following options in configuration.nix and run nixos-rebuild.
+
+```nix
+{ pkgs, ... }: {
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+}
+```
+
+### Non-NixOS
+
+On non-nixos systems, edit either ~/.config/nix/nix.conf or /etc/nix/nix.conf and add:
+
+```bash
+experimental-features = nix-command flakes
+```
+
+Here's a handy copy-paste:
+
+```bash
+mkdir -p ~/.config/nix
+echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
+```
