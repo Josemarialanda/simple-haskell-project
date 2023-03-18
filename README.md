@@ -67,7 +67,9 @@ Do you want to initialize a git repository? [y/N] n
 
 This will create a nix flake + cabal based project in the folder my-simple-haskell-project.
 
-You can enter the Nix shell with nix develop. Running cabal from inside this shell should use the packages that have been pre-built by Nix.
+You can enter the Nix shell with `nix develop`. From within the shell you can use cabal to enter the repl with `cabal repl` and you can build your project with `cabal build`.
+
+You can also build your project entirely with **nix** using **nix build**.
 
 **Note**: While the script itself does not depend on cabal or nix to run, in order to build/enter the development shell of your newly created project you do need to
 have nix + flakes installed.
