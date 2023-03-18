@@ -117,7 +117,7 @@ EOF
   done
   
   # If test suite is yes then create a test suite.
-  if [ $testsuite = "y" ]; then
+  if [ $testsuite = "y" ] || [ $testsuite = "Y" ]; then
     mkdir test
     cat <<EOF > test/Spec.hs
 import Test.Tasty
@@ -142,7 +142,7 @@ EOF
   done
   
   # If benchmark suite is yes then create a benchmark suite.
-  if [ $benchmarksuite = "y" ]; then
+  if [ $benchmarksuite = "y" ] || [ $benchmarksuite = "Y" ]; then 
     mkdir bench
     cat <<EOF > bench/Main.hs
 import Criterion.Main
@@ -164,7 +164,7 @@ EOF
   done
   
   # If readme is yes then create a readme file.
-  if [ $readme = "y" ]; then
+  if [ $readme = "y" ] || [ $readme = "Y" ]; then 
     echo "$description" > README.md 
   fi
   
@@ -175,7 +175,7 @@ EOF
   # If license is yes then ask which license to use.
   # Display a list of licenses and ask the user to enter the number of the license they want to use. Default is MIT.
   # If the user enters a number that is not in the list then ask for a new license number until a valid license number is entered.
-  if [ $license = "y" ]; then
+  if [ $license = "y" ] || [ $license = "Y" ]; then
     echo "1. MIT"
     echo "2. BSD2"
     echo "3. BSD3"
@@ -203,7 +203,7 @@ EOF
   
   # If license is yes then fetch the license from the GitHub API and save it to a file called LICENSE.
   # Also save the license licensespdx_id to the variable licensespdx_id.
-  if [ $license = "y" ]; then
+  if [ $license = "y" ] || [ $license = "Y" ]; then 
     licenseurl=$(curl -s https://api.github.com/licenses | jq -r ".[$licensechoice-1].url")
     licensespdx_id=$(curl -s https://api.github.com/licenses | jq -r ".[$licensechoice-1].spdx_id")
     curl -s $licenseurl | jq -r ".body" > LICENSE
@@ -221,7 +221,7 @@ EOF
   done
   
   # If changelog is yes then create a changelog file.
-  if [ $changelog = "y" ]; then
+  if [ $changelog = "y" ] || [ $changelog = "Y" ]; then 
     echo "# Changelog" > CHANGELOG.md 
   fi
   
@@ -241,14 +241,14 @@ extra-doc-files:
 EOF
   
   # If changelog is yes then add the changelog to the cabal file generated above.
-  if [ $changelog = "y" ]; then
+  if [ $changelog = "y" ] || [ $changelog = "Y" ]; then
     cat <<EOF >> $project.cabal
   CHANGELOG.md
 EOF
   fi
   
   # If license is yes then add the license to the cabal file generated above.
-  if [ $license = "y" ]; then
+  if [ $license = "y" ] || [ $license = "Y" ]; then
     cat <<EOF >> $project.cabal
 license:         $licensespdx_id
 license-file:    LICENSE
@@ -256,7 +256,7 @@ EOF
   fi
   
   # If license is no then add NONE to the license field in the cabal file generated above.
-  if [ $license = "n" ]; then
+  if [ $license = "n" ] || [ $license = "N" ]; then
     cat <<EOF >> $project.cabal
 license:         NONE
 EOF
@@ -280,7 +280,7 @@ executable $project-exe
 EOF
   
   # if either test suite or benchmark suite is yes then add the following to the cabal file generated above.
-  if [ $testsuite = "y" ] || [ $benchmarksuite = "y" ]; then
+  if [ $testsuite = "y" ] || [ $testsuite = "Y" ] || [ $benchmarksuite = "y" ] || [ $benchmarksuite = "Y" ]; then
     cat <<EOF >> $project.cabal
   build-depends:  $project
 
@@ -301,7 +301,7 @@ EOF
   fi
   
   # If test suite is yes then add the test suite to the cabal file generated above.
-  if [ $testsuite = "y" ]; then
+  if [ $testsuite = "y" ] || [ $testsuite = "Y" ]; then
     cat <<EOF >> $project.cabal
 
 test-suite $project-test
@@ -320,7 +320,7 @@ EOF
   fi
   
   # If benchmark suite is yes then add the benchmark suite to the cabal file generated above.
-  if [ $benchmarksuite = "y" ]; then
+  if [ $benchmarksuite = "y" ] || [ $benchmarksuite = "Y" ];  then
     cat <<EOF >> $project.cabal
 
 benchmark $project-bench
@@ -341,7 +341,7 @@ packages: ./
 EOF
   
   # If test suite is yes then add the test suite to the cabal.project file generated above.
-  if [ $testsuite = "y" ]; then
+  if [ $testsuite = "y" ] || [ $testsuite = "Y" ]; then
     cat <<EOF >> cabal.project
 package $project
 tests: true
@@ -359,7 +359,7 @@ cradle:
 EOF
   
   # If test suite is yes then add the test suite to the hie.yaml file generated above.
-  if [ $testsuite = "y" ]; then
+  if [ $testsuite = "y" ] || [ $testsuite = "Y" ]; then
     cat <<EOF >> hie.yaml
   
     - path: "test"
@@ -368,7 +368,7 @@ EOF
   fi
   
   # If benchmark suite is yes then add the benchmark suite to the hie.yaml file generated above.
-  if [ $benchmarksuite = "y" ]; then
+  if [ $benchmarksuite = "y" ] || [ $benchmarksuite = "Y" ]; then
     cat <<EOF >> hie.yaml
     
     - path: "bench"
@@ -440,14 +440,15 @@ EOF
   read -p "Do you want to initialize a git repository? [y/N] " gitrepo
   gitrepo=${gitrepo:-n}
   
-  # if gitrepo is not yes or no then ask for a new changelog option until a valid changelog option is entered.
-  while [ $gitrepo != "y" ] && [ $gitrepo != "n" ]; do
+  # If gitrepo is not yes or no then ask for a new changelog option until a valid changelog option is entered.  
+  while [[ ! $gitrepo =~ ^[yYnN]$ ]]; do
+    echo "Initialize git repo option must be y or n."
     read -p "Do you want to initialize a git repository? [y/N] " gitrepo
     gitrepo=${gitrepo:-n}
   done
-  
+
   # If gitrepo is yes then initialize a git repository.
-  if [ $gitrepo = "y" ]; then
+  if [ $gitrepo = "y" ] || [ $gitrepo = "Y" ]; then
     git init
     git add .
     git commit -m "Initial commit"
