@@ -1,6 +1,6 @@
 # simple-haskell-project
 
-simple-haskell-project is a convenient script that sets up a haskell project containing ghc, cabal, hoogle, ormolu, and haskell-language-server.
+simple-haskell-project is a convenient script that sets up a haskell project containing **ghc**, **cabal**, **hoogle**, **ormolu**, and **haskell-language-server**.
 
 Check out the example projects in [example projects](https://github.com/Josemarialanda/simple-haskell-project/tree/master/example%20projects).
 
