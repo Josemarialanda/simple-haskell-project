@@ -69,10 +69,9 @@ This will create a nix flake + cabal based project in the folder my-simple-haske
 
 You can enter the Nix shell with `nix develop`. From within the shell you can use cabal to enter the repl with `cabal repl` and you can build your project with `cabal build`.
 
-You can also build your project entirely with **nix** using **nix build**.
+You can also build your project entirely with nix using `nix build`.
 
-**Note**: While the script itself does not depend on cabal or nix to run, in order to build/enter the development shell of your newly created project you do need to
-have nix + flakes installed.
+**Note**: While the script itself does not depend on cabal or nix to run, in order to build/enter the development shell of your newly created project you do need to have nix + flakes installed.
 
 ## Install Nix
 
@@ -82,7 +81,7 @@ have nix + flakes installed.
 
 ### NixOS
 
-On NixOS set the following options in configuration.nix and run nixos-rebuild.
+On NixOS set the following options in **configuration.nix** and run `nixos-rebuild`.
 
 ```nix
 { pkgs, ... }: {
@@ -92,7 +91,7 @@ On NixOS set the following options in configuration.nix and run nixos-rebuild.
 
 ### Non-NixOS
 
-On non-nixos systems, edit either ~/.config/nix/nix.conf or /etc/nix/nix.conf and add:
+On non-nixos systems, edit either **~/.config/nix/nix.conf** or **/etc/nix/nix.conf** and add:
 
 ```bash
 experimental-features = nix-command flakes
