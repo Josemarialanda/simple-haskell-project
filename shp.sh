@@ -38,7 +38,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
   exit 0
 fi
 
-# if the first argument is not -v, --version, -h, --help, run or cool then display the help message and exit the program.
+# If the first argument is not -v, --version, -h, --help, run or cool then display the help message and exit the program.
 if [ "$1" != "-v" ] && [ "$1" != "--version" ] && [ "$1" != "-h" ] && [ "$1" != "--help" ] && [ "$1" != "run" ] && [ "$1" != "cool" ]; then
   help
   exit 0
@@ -84,7 +84,8 @@ function usage {
   read -p "Enter the source directory name [src]: " srcdir
   srcdir=${srcdir:-src}
   
-  # if the source directory name contains any non-alphanumeric characters (with the exception of hyphens) then ask for a new source directory name until a valid source directory name is entered.
+  # if the source directory name contains any non-alphanumeric characters (with the exception of hyphens) 
+  # then ask for a new source directory name until a valid source directory name is entered.
   while [[ ! $srcdir =~ ^[a-z0-9-]+$ ]]; do
     echo "Source directory name must only contain alphanumeric characters and hyphens."
     read -p "Enter the source directory name [src]: " srcdir
@@ -134,7 +135,7 @@ EOF
   read -p "Include a benchmark suite? [y/N] " benchmarksuite
   benchmarksuite=${benchmarksuite:-n}
   
-  # if benchmark suite is not yes or no then ask for a new benchmark suite option until a valid benchmark suite option is entered.
+  # If benchmark suite is not yes or no then ask for a new benchmark suite option until a valid benchmark suite option is entered.
   while [[ ! $benchmarksuite =~ ^[yYnN]$ ]]; do
     echo "Benchmark suite option must be y or n."
     read -p "Include a benchmark suite? [y/N] " benchmarksuite
@@ -202,7 +203,6 @@ EOF
   fi
   
   # If license is yes then fetch the license from the GitHub API and save it to a file called LICENSE.
-  # Also save the license licensespdx_id to the variable licensespdx_id.
   if [ $license = "y" ] || [ $license = "Y" ]; then 
     licenseurl=$(curl -s https://api.github.com/licenses | jq -r ".[$licensechoice-1].url")
     licensespdx_id=$(curl -s https://api.github.com/licenses | jq -r ".[$licensechoice-1].spdx_id")
@@ -213,7 +213,7 @@ EOF
   read -p "Include a changelog? [y/N] " changelog
   changelog=${changelog:-n}
   
-  # if changelog is not yes or no then ask for a new changelog option until a valid changelog option is entered.
+  # If changelog is not yes or no then ask for a new changelog option until a valid changelog option is entered.
   while [[ ! $changelog =~ ^[yYnN]$ ]]; do
     echo "Changelog option must be y or n."
     read -p "Include a changelog? [y/N] " changelog
@@ -279,7 +279,7 @@ executable $project-exe
   ghc-options:    -threaded -rtsopts -with-rtsopts=-N
 EOF
   
-  # if either test suite or benchmark suite is yes then add the following to the cabal file generated above.
+  # If either test suite or benchmark suite is yes then add the following to the cabal file generated above.
   if [ $testsuite = "y" ] || [ $testsuite = "Y" ] || [ $benchmarksuite = "y" ] || [ $benchmarksuite = "Y" ]; then
     cat <<EOF >> $project.cabal
   build-depends:  $project
