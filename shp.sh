@@ -10,7 +10,7 @@ function help {
 ██████╔╝██║░░██║██║░░░░░
 ╚═════╝░╚═╝░░╚═╝╚═╝░░░░░ (simple-haskell-project)
 
-Usage: startup.sh run
+Usage: shp.sh run
   
     -h, --help    display this help message and exit
     -v, --version display version information and exit the program
@@ -100,10 +100,10 @@ function usage {
   
   # Create Main.hs file.
   cat <<EOF > $srcdir/Main.hs
-  module Main where
-  
-  main :: IO ()
-  main = putStrLn "Hello, World!"
+module Main where
+
+main :: IO ()
+main = putStrLn "Hello, World!"
 EOF
   
   # Ask if the user wants to include a test suite, default is no.
@@ -121,15 +121,15 @@ EOF
   if [ $testsuite = "y" ]; then
     mkdir test
     cat <<EOF > test/Main.hs
-  module Main where
-  
-  import Test.Tasty
-  
-  main :: IO ()
-  main = defaultMain tests
-  
-  tests :: TestTree
-  tests = testGroup "Tests" []
+module Main where
+
+import Test.Tasty
+
+main :: IO ()
+main = defaultMain tests
+
+tests :: TestTree
+tests = testGroup "Tests" []
 EOF
   fi
   
@@ -148,12 +148,12 @@ EOF
   if [ $benchmarksuite = "y" ]; then
     mkdir bench
     cat <<EOF > bench/Main.hs
-  module Main where
-  
-  import Criterion.Main
-  
-  main :: IO ()
-  main = defaultMain []
+module Main where
+
+import Criterion.Main
+
+main :: IO ()
+main = defaultMain []
 EOF
   fi
   
@@ -232,75 +232,75 @@ EOF
   
   # Create cabal file.
   cat <<EOF > $project.cabal 
-  cabal-version:   2.4
-  name:            $project
-  version:         0
-  tested-with:     GHC ==8.6.3 || ==8.8.3 || ==8.10.5
-  description:     $description
-  author:          $name
-  maintainer:      $name - $email
-  copyright:       $(date '+%Y-%m-%d') $name
-  build-type:      Simple
-  extra-doc-files: 
-    README.md
+cabal-version:   2.4
+name:            $project
+version:         0
+tested-with:     GHC ==8.6.3 || ==8.8.3 || ==8.10.5
+description:     $description
+author:          $name
+maintainer:      $name - $email
+copyright:       $(date '+%Y-%m-%d') $name
+build-type:      Simple
+extra-doc-files: 
+  README.md
 EOF
   
   # If changelog is yes then add the changelog to the cabal file generated above.
   if [ $changelog = "y" ]; then
     cat <<EOF >> $project.cabal
-    CHANGELOG.md
+  CHANGELOG.md
 EOF
   fi
   
   # If license is yes then add the license to the cabal file generated above.
   if [ $license = "y" ]; then
     cat <<EOF >> $project.cabal
-  license:         $licensespdx_id
-  license-file:    LICENSE
+license:         $licensespdx_id
+license-file:    LICENSE
 EOF
   fi
   
   # If license is no then add NONE to the license field in the cabal file generated above.
   if [ $license = "n" ]; then
     cat <<EOF >> $project.cabal
-  license:         NONE
+license:         NONE
 EOF
   fi
   
   cat <<EOF >> $project.cabal 
   
-  common common-options
-    build-depends:      base >=4.9 && <5
-    default-language:   Haskell2010
-    default-extensions: 
-    build-depends:
-    ghc-options:
-  
-  executable $project-exe
-    import:         common-options
-    type:           exitcode-stdio-1.0
-    hs-source-dirs: $srcdir
-    main-is:        Main.hs
-    ghc-options:    -threaded -rtsopts -with-rtsopts=-N
+common common-options
+  build-depends:      base >=4.9 && <5
+  default-language:   Haskell2010
+  default-extensions: 
+  build-depends:
+  ghc-options:
+
+executable $project-exe
+  import:         common-options
+  type:           exitcode-stdio-1.0
+  hs-source-dirs: $srcdir
+  main-is:        Main.hs
+  ghc-options:    -threaded -rtsopts -with-rtsopts=-N
 EOF
   
   # if either test suite or benchmark suite is yes then add the following to the cabal file generated above.
   if [ $testsuite = "y" ] || [ $benchmarksuite = "y" ]; then
     cat <<EOF >> $project.cabal
-    build-depends:  $project
-  
-  library
-    import:          common-options
-    hs-source-dirs:  lib
-    exposed-modules: Lib
-    build-depends:
+  build-depends:  $project
+
+library
+  import:          common-options
+  hs-source-dirs:  lib
+  exposed-modules: Lib
+  build-depends:
 EOF
   
     mkdir lib
     pushd lib > /dev/null
   
     cat <<EOF > Lib.hs
-  module Lib where
+module Lib where
 EOF
     popd > /dev/null
   fi
@@ -308,137 +308,137 @@ EOF
   # If test suite is yes then add the test suite to the cabal file generated above.
   if [ $testsuite = "y" ]; then
     cat <<EOF >> $project.cabal
-  
-  test-suite $project-test
-    import:         common-options
-    type:           exitcode-stdio-1.0
-    hs-source-dirs: test
-    main-is:        Spec.hs
-    build-depends:
-      , $project
-      , hspec
-      , HUnit
-      , tasty
-      , QuickCheck
-    ghc-options:    -threaded -rtsopts -with-rtsopts=-N
+
+test-suite $project-test
+  import:         common-options
+  type:           exitcode-stdio-1.0
+  hs-source-dirs: test
+  main-is:        Spec.hs
+  build-depends:
+    , $project
+    , hspec
+    , HUnit
+    , tasty
+    , QuickCheck
+  ghc-options:    -threaded -rtsopts -with-rtsopts=-N
 EOF
   fi
   
   # If benchmark suite is yes then add the benchmark suite to the cabal file generated above.
   if [ $benchmarksuite = "y" ]; then
     cat <<EOF >> $project.cabal
-  
-  benchmark $project-bench
-    import:         common-options
-    type:           exitcode-stdio-1.0
-    hs-source-dirs: bench
-    main-is:        Main.hs
-    build-depends:
-      , $project
-      , criterion
-    ghc-options:    -threaded -rtsopts -with-rtsopts=-N
+
+benchmark $project-bench
+  import:         common-options
+  type:           exitcode-stdio-1.0
+  hs-source-dirs: bench
+  main-is:        Main.hs
+  build-depends:
+    , $project
+    , criterion
+  ghc-options:    -threaded -rtsopts -with-rtsopts=-N
 EOF
   fi
   
   # Create cabal.project file.
   cat <<EOF > cabal.project
-  packages: ./
+packages: ./
 EOF
   
   # If test suite is yes then add the test suite to the cabal.project file generated above.
   if [ $testsuite = "y" ]; then
     cat <<EOF >> cabal.project
-  package $project
-  tests: true
+package $project
+tests: true
 EOF
   fi
   
   # Create hie.yaml file.
   cat <<EOF > hie.yaml
-  cradle:
-    multi:
-      # - path: "ignore/"
-      #   config: {cradle: {none: }}
-      - path: "src"
-        config: {cradle: {cabal: {component: "$project:$project-exe"}}}
+cradle:
+  multi:
+    # - path: "ignore/"
+    #   config: {cradle: {none: }}
+    - path: "src"
+      config: {cradle: {cabal: {component: "$project:$project-exe"}}}
 EOF
   
   # If test suite is yes then add the test suite to the hie.yaml file generated above.
   if [ $testsuite = "y" ]; then
     cat <<EOF >> hie.yaml
   
-      - path: "test"
-        config: {cradle: {cabal: {component: "$project:$project-test"}}}
+    - path: "test"
+      config: {cradle: {cabal: {component: "$project:$project-test"}}}
 EOF
   fi
   
   # If benchmark suite is yes then add the benchmark suite to the hie.yaml file generated above.
   if [ $benchmarksuite = "y" ]; then
     cat <<EOF >> hie.yaml
-  
-      - path: "bench"
-        config: {cradle: {cabal: {component: "$project:$project-bench"}}}
+    
+    - path: "bench"
+      config: {cradle: {cabal: {component: "$project:$project-bench"}}}
 EOF
   fi
   
   # Create .hlint.yaml file.
   cat <<EOF > .hlint.yaml
-  # Example hlint file
-  
-  # Generalise map to fmap, ++ to <>. Off by default
-  - group:
-      name: generalise
-      enabled: true
-  
-  - ignore:
-      name: Use section
-  
-  - ignore:
-      name: Use infix
+# Example hlint file
+
+# Generalise map to fmap, ++ to <>. Off by default
+- group:
+    name: generalise
+    enabled: true
+
+- ignore:
+    name: Use section
+
+- ignore:
+    name: Use infix
 EOF
   
   # Create flake.nix
   cat <<EOF > flake.nix
-  {
-    description = "$description";
-  
-    inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    inputs.flake-utils.url = "github:numtide/flake-utils";
-  
-    outputs = inputs:
-      let
-        overlay = final: prev: {
-          haskell = prev.haskell // {
-            packageOverrides = hfinal: hprev:
-              prev.haskell.packageOverrides hfinal hprev // {
-                $project = hfinal.callCabal2nix "$project" ./. { };
-              };
-          };
-          $project = final.haskell.lib.compose.justStaticExecutables final.haskellPackages.$project;
-        };
-        perSystem = system:
-          let
-            pkgs = import inputs.nixpkgs { inherit system; overlays = [ overlay ]; };
-            hspkgs = pkgs.haskellPackages;
-          in
-          {
-            devShell = hspkgs.shellFor {
-              withHoogle = true;
-              packages = p: [ p.$project ];
-              buildInputs = [
-                hspkgs.cabal-install
-                hspkgs.haskell-language-server
-                hspkgs.hlint
-                hspkgs.ormolu
-                pkgs.bashInteractive
-              ];
+{
+  description = "$description";
+
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs.flake-utils.url = "github:numtide/flake-utils";
+
+  outputs = inputs:
+    let
+      overlay = final: prev: {
+        haskell = prev.haskell // {
+          packageOverrides = hfinal: hprev:
+            prev.haskell.packageOverrides hfinal hprev // {
+              $project = hfinal.callCabal2nix "$project" ./. { };
             };
-            defaultPackage = pkgs.$project;
+        };
+        $project = final.haskell.lib.compose.justStaticExecutables final.haskellPackages.$project;
+      };
+      perSystem = system:
+        let
+          pkgs = import inputs.nixpkgs { inherit system; overlays = [ overlay ]; };
+          hspkgs = pkgs.haskellPackages;
+        in
+        {
+          devShell = hspkgs.shellFor {
+            withHoogle = true;
+            packages = p: [ p.$project ];
+            buildInputs = [
+              hspkgs.cabal-install
+              hspkgs.haskell-language-server
+              hspkgs.hlint
+              hspkgs.ormolu
+              pkgs.bashInteractive
+            ];
           };
-      in
-      { inherit overlay; } // 
-        inputs.flake-utils.lib.eachDefaultSystem perSystem;
-  }
+          defaultPackage = pkgs.$project;
+        };
+    in
+    { inherit overlay; } // 
+      inputs.flake-utils.lib.eachDefaultSystem perSystem;
+}
 EOF
   
   # Ask if the user wants to create a git repository. Default is no.
