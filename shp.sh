@@ -268,7 +268,6 @@ common common-options
   build-depends:      base >=4.9 && <5
   default-language:   Haskell2010
   default-extensions: 
-  build-depends:
   ghc-options:
 
 executable $project-exe
@@ -279,8 +278,12 @@ executable $project-exe
   ghc-options:    -threaded -rtsopts -with-rtsopts=-N
 EOF
   
-  # If either test suite or benchmark suite is yes then add the following to the cabal file generated above.
-  if [ $testsuite = "y" ] || [ $testsuite = "Y" ] || [ $benchmarksuite = "y" ] || [ $benchmarksuite = "Y" ]; then
+  # If neither test suite or benchmark suite is yes then add the following to the cabal file generated above.
+  if [ $testsuite != "y" ] && [ $testsuite != "Y" ] && [ $benchmarksuite != "y" ] && [ $benchmarksuite != "Y" ]; then
+    cat <<EOF >> $project.cabal
+  build-depends:
+EOF
+  else 
     cat <<EOF >> $project.cabal
   build-depends:  $project
 
@@ -290,7 +293,7 @@ library
   exposed-modules: Lib
   build-depends:
 EOF
-  
+
     mkdir lib
     pushd lib > /dev/null
   
