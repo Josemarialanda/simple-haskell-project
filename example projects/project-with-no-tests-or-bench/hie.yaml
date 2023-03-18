@@ -1,0 +1,6 @@
+cradle:
+  multi:
+    # - path: "ignore/"
+    #   config: {cradle: {none: }}
+    - path: "src"
+      config: {cradle: {cabal: {component: "project-with-no-tests-or-bench:project-with-no-tests-or-bench-exe"}}}

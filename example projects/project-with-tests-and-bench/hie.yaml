@@ -1,0 +1,15 @@
+cradle:
+  multi:
+    # - path: "ignore/"
+    #   config: {cradle: {none: }}
+    - path: "src"
+      config: {cradle: {cabal: {component: "project-with-tests-and-bench:project-with-tests-and-bench-exe"}}}
+    
+    - path: "lib"
+      config: {cradle: {cabal: {component: "lib:project-with-tests-and-bench"}}}
+  
+    - path: "test"
+      config: {cradle: {cabal: {component: "project-with-tests-and-bench:project-with-tests-and-bench-test"}}}
+    
+    - path: "bench"
+      config: {cradle: {cabal: {component: "project-with-tests-and-bench:project-with-tests-and-bench-bench"}}}

@@ -1,0 +1,28 @@
+cabal-version:   2.4
+name:            project-with-no-tests-or-bench
+version:         0
+tested-with:     GHC ==8.6.3 || ==8.8.3 || ==8.10.5
+description:     A simple Haskell project
+author:          José María Landa Chávez
+maintainer:      José María Landa Chávez - josemaria.landa@gmail.com
+copyright:       2023-03-18 José María Landa Chávez
+build-type:      Simple
+extra-doc-files: 
+  README.md
+  CHANGELOG.md
+license:         AGPL-3.0
+license-file:    LICENSE
+  
+common common-options
+  build-depends:      base >=4.9 && <5
+  default-language:   Haskell2010
+  default-extensions: 
+  ghc-options:
+
+executable project-with-no-tests-or-bench-exe
+  import:         common-options
+  type:           exitcode-stdio-1.0
+  hs-source-dirs: src
+  main-is:        Main.hs
+  ghc-options:    -threaded -rtsopts -with-rtsopts=-N
+  build-depends:

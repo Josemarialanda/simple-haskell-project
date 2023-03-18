@@ -16,7 +16,7 @@ source <(curl -s https://raw.githubusercontent.com/Josemarialanda/simple-haskell
 ```
 
 ```bash
-> source <(curl -s https://raw.githubusercontent.com/Josemarialanda/simple-haskell-project/master/shp.sh) --help
+> ./shp --help
 
 ░██████╗██╗░░██╗██████╗░
 ██╔════╝██║░░██║██╔══██╗
@@ -31,7 +31,6 @@ Usage: shp.sh run
     -v, --version display version information and exit the program
 
     run           run the program
-    cool          display a cool message and exit the program
 ```
 
 ## Project creation example

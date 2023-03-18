@@ -1,0 +1,3 @@
+packages: ./
+package project-with-tests-and-bench
+tests: true
