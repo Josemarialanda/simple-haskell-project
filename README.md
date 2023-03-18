@@ -12,7 +12,6 @@ Check out the example projects in [example projects](https://github.com/Josemari
 
 * Fast!
 * Simple!
-* No messing around with template repositories!
 * Generated code is easy to read and extend!
 
 ## Usage
