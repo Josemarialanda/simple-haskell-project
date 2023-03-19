@@ -299,6 +299,7 @@ EOF
 
 test-suite $project-test
   import:         common-options
+  type:           exitcode-stdio-1.0
   hs-source-dirs: test
   main-is:        Spec.hs
   build-depends:
@@ -317,6 +318,7 @@ EOF
 
 benchmark $project-bench
   import:         common-options
+  type:           exitcode-stdio-1.0
   hs-source-dirs: bench
   main-is:        Main.hs
   build-depends:
