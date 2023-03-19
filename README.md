@@ -39,6 +39,7 @@ Usage: shp.sh run
 
     run           run the program
 ```
+![](https://github.com/Josemarialanda/simple-haskell-project/blob/master/usage.gif)
 
 ## Project creation example
 
