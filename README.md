@@ -22,24 +22,6 @@ Simply run:
 source <(curl -s https://raw.githubusercontent.com/Josemarialanda/simple-haskell-project/master/shp.sh) run
 ```
 
-```bash
-> ./shp --help
-
-░██████╗██╗░░██╗██████╗░
-██╔════╝██║░░██║██╔══██╗
-╚█████╗░███████║██████╔╝
-░╚═══██╗██╔══██║██╔═══╝░
-██████╔╝██║░░██║██║░░░░░
-╚═════╝░╚═╝░░╚═╝╚═╝░░░░░ (simple-haskell-project)
-
-Usage: shp.sh run
-  
-    -h, --help    display this help message and exit
-    -v, --version display version information and exit the program
-
-    run           run the program
-```
-
 ## Project creation example
 
 ![](https://github.com/Josemarialanda/simple-haskell-project/blob/master/usage.gif)
