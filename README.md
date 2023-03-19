@@ -66,7 +66,7 @@ Include a license? [y/N] y
     11	MIT
     12	MPL-2.0
     13	Unlicense
-Enter the number of the license you want to use [1]: 4
+Enter the number of the license you want to use [11]: 4
 Include a changelog? [y/N] y
 Do you want to initialize a git repository? [y/N] n
 ```
