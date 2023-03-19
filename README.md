@@ -39,40 +39,12 @@ Usage: shp.sh run
 
     run           run the program
 ```
-![](https://github.com/Josemarialanda/simple-haskell-project/blob/master/usage.gif)
 
 ## Project creation example
 
-```bash
-> source <(curl -s https://raw.githubusercontent.com/Josemarialanda/simple-haskell-project/master/shp.sh) run
-Enter your name [username]: John Enrico Bubbles
-Enter your email [username@email.com]: Johnnyboy_bubbles@gmail.com
-Enter the project name [simple-haskell-project]: My Simple Haskell Project
-Enter the project description [A simple Haskell project]: 
-Enter the source directory name [src]: app
-Include a test suite? [y/N] n
-Include a benchmark suite? [y/N] n
-Include a readme? [y/N] y
-Include a license? [y/N] y
-     1	AGPL-3.0
-     2	Apache-2.0
-     3	BSD-2-Clause
-     4	BSD-3-Clause
-     5	BSL-1.0
-     6	CC0-1.0
-     7	EPL-2.0
-     8	GPL-2.0
-     9	GPL-3.0
-    10	LGPL-2.1
-    11	MIT
-    12	MPL-2.0
-    13	Unlicense
-Enter the number of the license you want to use [11]: 4
-Include a changelog? [y/N] y
-Do you want to initialize a git repository? [y/N] n
-```
+![](https://github.com/Josemarialanda/simple-haskell-project/blob/master/usage.gif)
 
-This will create a nix flake + cabal based project in the folder my-simple-haskell-project.
+This will create a nix flake + cabal based project in the folder a-basic-app.
 
 You can enter the Nix shell with `nix develop`. From within the shell you can use cabal to enter the repl with `cabal repl` and you can build your project with `cabal build`.
 
