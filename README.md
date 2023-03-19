@@ -53,18 +53,19 @@ Include a test suite? [y/N] n
 Include a benchmark suite? [y/N] n
 Include a readme? [y/N] y
 Include a license? [y/N] y
-1. MIT
-2. BSD2
-3. BSD3
-4. GPL-2
-5. GPL-3
-6. LGPL-2.1
-7. LGPL-3
-8. AGPL-3
-9. Apache-2.0
-10. MPL-2.0
-11. Unlicense
-12. None
+     1	AGPL-3.0
+     2	Apache-2.0
+     3	BSD-2-Clause
+     4	BSD-3-Clause
+     5	BSL-1.0
+     6	CC0-1.0
+     7	EPL-2.0
+     8	GPL-2.0
+     9	GPL-3.0
+    10	LGPL-2.1
+    11	MIT
+    12	MPL-2.0
+    13	Unlicense
 Enter the number of the license you want to use [1]: 4
 Include a changelog? [y/N] y
 Do you want to initialize a git repository? [y/N] n
