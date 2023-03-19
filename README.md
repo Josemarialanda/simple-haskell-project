@@ -1,4 +1,4 @@
-# simple-haskell-project
+# [simple-haskell-project](https://josemarialanda.github.io/simple-haskell-project/)
 
 simple-haskell-project is a convenient script that sets up a haskell project containing:
 
