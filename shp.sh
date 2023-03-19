@@ -172,40 +172,32 @@ EOF
   read -p "Include a license? [y/N] " license
   license=${license:-n}
   
+  # If license is not yes or no then ask for a new license option until a valid license option is entered.
+  while [[ ! $license =~ ^[yYnN]$ ]]; do
+    echo "License option must be y or n."
+    read -p "Include a license? [y/N] " license
+    license=${license:-n}
+  done
+
   # If license is yes then ask which license to use.
-  # Display a list of licenses and ask the user to enter the number of the license they want to use. Default is MIT.
-  # If the user enters a number that is not in the list then ask for a new license number until a valid license number is entered.
   if [ $license = "y" ] || [ $license = "Y" ]; then
-    echo "1. MIT"
-    echo "2. BSD2"
-    echo "3. BSD3"
-    echo "4. GPL-2"
-    echo "5. GPL-3"
-    echo "6. LGPL-2.1"
-    echo "7. LGPL-3"
-    echo "8. AGPL-3"
-    echo "9. Apache-2.0"
-    echo "10. MPL-2.0"
-    echo "11. Unlicense"
-    echo "12. None"
-    read -p "Enter the number of the license you want to use [1]: " licensechoice
-    licensechoice=${licensechoice:-1}
-    while [[ ! $licensechoice =~ ^[1-9]$ ]] && [[ ! $licensechoice =~ ^1[0-2]$ ]]; do
-      echo "License number must be between 1 and 12."
-      read -p "Enter the number of the license you want to use [1]: " licensechoice
-      licensechoice=${licensechoice:-1}
+    # Fetch license list from https://api.github.com/licenses and display a list of licenses.
+    licenses=$(curl -s https://api.github.com/licenses | jq -r '.[].spdx_id')
+    licensecount=$(echo "$licenses" | wc -l)
+    echo "$licenses" | nl
+    # Ask the user to enter the number of the license they want to use. Default is MIT.
+    read -p "Enter the number of the license you want to use [11]: " licensenumber
+    licensenumber=${licensenumber:-11}
+    # If the user enters a number that is not in the list then ask for a new license number until a valid license number is entered.
+    while [[ ! $licensenumber =~ ^[0-9]+$ ]] || [ $licensenumber -gt $licensecount ]; do
+      echo "License number must be a number between 1 and $licensecount."
+      read -p "Enter the number of the license you want to use [11]: " licensenumber
+      licensenumber=${licensenumber:-11}
     done
-    # If the licence number is 12 then set the license to no.
-    if [ $licensechoice = "12" ]; then
-      license=n
-    fi
-  fi
-  
-  # If license is yes then fetch the license from the GitHub API and save it to a file called LICENSE.
-  if [ $license = "y" ] || [ $license = "Y" ]; then 
-    licenseurl=$(curl -s https://api.github.com/licenses | jq -r ".[$licensechoice-1].url")
-    licensespdx_id=$(curl -s https://api.github.com/licenses | jq -r ".[$licensechoice-1].spdx_id")
-    curl -s $licenseurl | jq -r ".body" > LICENSE
+    licensespdx_id=$(echo "$licenses" | sed -n "$licensenumber p")
+    licenseurl=$(curl -s https://api.github.com/licenses | jq -r ".[$((licensenumber - 1))].url")
+    licensetext=$(curl -s $licenseurl | jq -r '.body')
+    echo "$licensetext" > LICENSE
   fi
   
   # Ask if the user wants to include a changelog, default is no.
@@ -271,7 +263,6 @@ common common-options
 
 executable $project-exe
   import:         common-options
-  type:           exitcode-stdio-1.0
   hs-source-dirs: $srcdir
   main-is:        Main.hs
   ghc-options:    -threaded -rtsopts -with-rtsopts=-N
@@ -308,7 +299,6 @@ EOF
 
 test-suite $project-test
   import:         common-options
-  type:           exitcode-stdio-1.0
   hs-source-dirs: test
   main-is:        Spec.hs
   build-depends:
@@ -327,7 +317,6 @@ EOF
 
 benchmark $project-bench
   import:         common-options
-  type:           exitcode-stdio-1.0
   hs-source-dirs: bench
   main-is:        Main.hs
   build-depends:
