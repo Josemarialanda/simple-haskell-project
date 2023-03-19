@@ -1,0 +1,6 @@
+cradle:
+  multi:
+    # - path: "ignore/"
+    #   config: {cradle: {none: }}
+    - path: "src"
+      config: {cradle: {cabal: {component: "bare-bones-project:bare-bones-project-exe"}}}
